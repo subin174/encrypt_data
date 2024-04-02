@@ -7,6 +7,10 @@ import { AppService } from './app/app.service';
 import { AuthModule } from './config/auth/auth.module';
 import { CryptController } from './controller/encrypt.controller';
 import { EncryptionService } from './service/crypto.service';
+import { AccountRepository } from './repository/account.repository';
+import { SettingService } from './service/setting.service';
+import { AccountService } from './service/account.service';
+import { Repository } from './repository/main.repository';
 
 @Module({
   imports: [
@@ -27,6 +31,6 @@ import { EncryptionService } from './service/crypto.service';
     AuthModule
   ],
   controllers: [AppController, CryptController],
-  providers: [AppService, EncryptionService],
+  providers: [AppService, EncryptionService, SettingService, AccountService, Repository, AccountRepository],
 })
 export class AppModule { }

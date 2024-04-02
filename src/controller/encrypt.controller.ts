@@ -58,9 +58,19 @@ export class CryptController {
 
     @ApiOperation({ summary: 'user' })
     @ApiResponse({ type: BaseResponse })
-    @Get('/list')
+    @Get('/encrypt')
     listUser(
     ) {
+        console.log('encryptUser');
         return this.service.encryptUser();
+    }
+
+    @ApiOperation({ summary: 'user' })
+    @ApiResponse({ type: BaseResponse })
+    @Get('/decrypt/list')
+    decryptUser(
+    ) {
+        console.log('decrypttUser');
+        return this.service.decryptUser();
     }
 }

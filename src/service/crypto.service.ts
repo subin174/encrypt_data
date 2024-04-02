@@ -2,15 +2,19 @@
 
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
-import { Repository } from 'src/repository/repository';
+// import { Repository } from 'src/repository/main.repository';
 import { SettingService } from './setting.service';
 import { AccountDto } from 'src/dto/account.dto';
+import { Repository } from 'src/repository/main.repository';
 
 @Injectable()
 export class EncryptionService {
+
+    constructor(
+        private readonly repo: Repository
+    ) { }
     private readonly algorithm = 'aes-256-cbc';
     private readonly key = 'hyraholdingshyraholdingssalalala';
-    private readonly repo: Repository;
     private readonly setting: SettingService;
     private readonly userService = 'aes-256-cbc';
 
@@ -32,11 +36,23 @@ export class EncryptionService {
     }
 
     async encryptUser() {
+
         let listUser = await this.repo.getListUserEn();
-        // let userEncrypt = this.encryptData(listUser);
-        return {
-            data: listUser.map((obj: any) => (new AccountDto(obj)))
-        };
+        for (let user of listUser) {
+            let userEncrypt = this.encryptData(user.email);
+            await this.repo.encryptEmail(user.id, userEncrypt);
+        }
+        return "Emails encrypted successfully";
+    }
+
+    async decryptUser() {
+
+        let listUser = await this.repo.getListUserEn();
+        for (let user of listUser) {
+            let userEncrypt = this.decryptData(user.email);
+            await this.repo.encryptEmail(user.id, userEncrypt);
+        }
+        return "Emails decrypted successfully";
     }
 
 

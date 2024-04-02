@@ -4,7 +4,7 @@ import {
     UnauthorizedException,
     Injectable
 } from '@nestjs/common';
-import {Repository} from '../repository/repository';
+import { Repository } from '../repository/main.repository';
 
 @Injectable()
 export class AccountService {
@@ -12,15 +12,15 @@ export class AccountService {
         private readonly repository: Repository,
     ) {
     }
-  
-    async checkUserPermission(userId: number,roles: string[]) {
+
+    async checkUserPermission(userId: number, roles: string[]) {
         try {
             let list = await this.repository.accountInfor(userId);
-            if(!list.length){
+            if (!list.length) {
                 throw new NotFoundException();
             }
             let user = list[0];
-            if(!roles.includes(user?.account_role)){
+            if (!roles.includes(user?.account_role)) {
                 throw new UnauthorizedException();
             }
         } catch (error) {

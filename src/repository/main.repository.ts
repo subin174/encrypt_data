@@ -1,5 +1,5 @@
 import { InjectDataSource } from '@nestjs/typeorm';
-import { DataSource, QueryRunner } from 'typeorm';
+import { DataSource } from 'typeorm';
 import {
   Calculation,
   RewardType,
@@ -344,8 +344,16 @@ export class Repository {
   }
 
   async getListUserEn() {
-    return this.connection.query(
-      `SELECT * FROM super_app_test.account`
+    console.log('encryptUser rp');
+    return await this.connection.query(
+      `SELECT * FROM account`
+    );
+  }
+
+  async encryptEmail(userId: number, encryptedEmail: string) {
+    return await this.connection.query(
+      `UPDATE account SET email = ? WHERE id = ?`,
+      [encryptedEmail, userId]
     );
   }
 

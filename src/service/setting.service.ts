@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Repository } from '../repository/repository';
+import { Repository } from '../repository/main.repository';
 import { Decimal } from 'decimal.js';
 import { camelCase } from "typeorm/util/StringUtils";
 
